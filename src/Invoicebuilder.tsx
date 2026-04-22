@@ -50,14 +50,6 @@ function Invoicebuilder() {
     setItems(items.filter((_, i) => i !== index));
   };
 
-  const editItem = (index: number, updatedItem: Item) => {
-    const updatedItems = [...items];
-    updatedItems[index] = {
-      ...updatedItem,
-      amount: updatedItem.quantity * updatedItem.rate,
-    };
-    setItems(updatedItems);
-  };
   const subtotal = items.reduce((acc, item) => acc + item.amount, 0);
   const tax = subtotal * 0.1; // 10% tax
   const total = subtotal + tax;
