@@ -33,14 +33,13 @@ function Sample() {
     setClient({ ...client, [e.target.name]: e.target.value });
   };
 
-  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewItem({
       ...newItem,
       [name]: name === "quantity" || name === "rate" ? Number(value) : value,
     });
   };
-
   const addOrUpdateItem = () => {
     if (!client.name.trim() || !client.address.trim()) {
       alert("Client name and address are required before adding items.");
@@ -90,98 +89,73 @@ function Sample() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold">Invoice Builder</h1>
-           <p className="text-gray-600">
-            A simple React application to create, edit, and print invoices with
-            client details, line items, and automatic tax calculation.
+     <div className="min-h-screen bg-gray-100 flex justify-center p-6">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
+        <h1 className="text-2xl font-bold mb-4 ">Invoice Builder</h1>
+        <p className="text-gray-600 underline hover:text-red-500 text-green-500">
+           This Invoice Builder helps you create, edit, and export invoices.
           </p>
-          
-       </div>
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <label>
-            Client Name :
-            <input
-              type="text"
-              name="name"
-              value={client.name}
-              onChange={handleClientChange}
+          <br></br>
+        <div className="space-y-4 mb-6">
+          <div className="flex items-center">
+            <span className="w-40">Client Name :</span>
+            <input type="text" 
+            name="name" 
+            value={client.name}
+             onChange={handleClientChange} 
+             className="border p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <span className="w-40">Client Address :</span>
+            <input type="text"
+             name="address" 
+            value={client.address} 
+            onChange={handleClientChange}
               required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <label>
-            Client Address :
-            <input
-              type="text"
-              name="address"
-              value={client.address}
-              onChange={handleClientChange}
-              required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <label>
-            Invoice Number :
-            <input
-              type="text"
-              name="invoiceNumber"
-              value={client.invoiceNumber}
-              onChange={handleClientChange}
-              required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-          <label>
-            Date :
-            <input
-              type="date"
-              name="date"
-              value={client.date}
-              onChange={handleClientChange}
-              required
-              className="border p-2 rounded w-full"
-            />
-          </label>
-        </form>
-        <div className="flex flex-wrap gap-4 mb-6 items-center">
-          <label className="flex-1 min-w-[200px]">
-            Description :
-            <input
-              type="text"
-              name="description"
-              value={newItem.description}
-              onChange={handleItemChange}
-              className="border p-2 rounded w-full"
-              required
-            />
-          </label>
-          <label>
-            Quantity:
-            <input
-              type="number"
-              name="quantity"
-              value={newItem.quantity}
-              onChange={handleItemChange}
-              className="border p-2 rounded w-24 text-right"
-              required
-              min={1}
-            />
-          </label>
-          <label>
-            Rate:
-            <input
-              type="number"
-              name="rate"
-              value={newItem.rate}
-              onChange={handleItemChange}
-              className="border p-2 rounded w-32 text-right"
-              required
-              min={1}
-            />
-          </label>
+              className="border p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <span className="w-40">Invoice Number :</span>
+            <input type="text" 
+            name="invoiceNumber"
+             value={client.invoiceNumber} 
+             onChange={handleClientChange} 
+             className="border p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <span className="w-40">Date :</span>
+            <input type="date" 
+            name="date" 
+            value={client.date} 
+            onChange={handleClientChange}
+             className="border p-2 flex-1" />
+          </div>
+        </div>
+        <div className="space-y-4 mb-6">
+          <div className="flex items-center">
+            <span className="w-40">Description :</span>
+            <input type="text"
+            name="description"
+             value={newItem.description} 
+             onChange={handleItemChange}
+              className="border p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <span className="w-40">Quantity :</span>
+            <input type="number" 
+            name="quantity"
+            value={newItem.quantity} 
+            onChange={handleItemChange}
+            className="border p-2 flex-1" />
+          </div>
+          <div className="flex items-center">
+            <span className="w-40">Rate :</span>
+            <input type="number" 
+            name="rate"
+            value={newItem.rate} 
+             onChange={handleItemChange}
+             className="border p-2 flex-1" />
+          </div>
           <button
             onClick={addOrUpdateItem}
             className="bg-blue-500 text-white px-6 py-2 rounded"
