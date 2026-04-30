@@ -1,0 +1,19 @@
+@media print {
+  body * {
+    visibility: hidden; /* Hide everything */
+  }
+  #invoice, #invoice * {
+    visibility: visible; /* Show only invoice */
+  }
+  #invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* Optional: Hide action buttons inside invoice */
+  #invoice button {
+    display: none;
+  }
+}

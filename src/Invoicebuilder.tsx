@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./Print.css";
+
 interface Client {
   name: string;
   address: string;
@@ -13,7 +15,7 @@ interface Item {
   amount: number;
 }
 
-function Sample() {
+function Invoicebuilder() {
   const [client, setClient] = useState<Client>({
     name: "",
     address: "",
@@ -33,13 +35,14 @@ function Sample() {
     setClient({ ...client, [e.target.name]: e.target.value });
   };
 
-   const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewItem({
       ...newItem,
       [name]: name === "quantity" || name === "rate" ? Number(value) : value,
     });
   };
+
   const addOrUpdateItem = () => {
     if (!client.name.trim() || !client.address.trim()) {
       alert("Client name and address are required before adding items.");
@@ -64,6 +67,7 @@ function Sample() {
     }
     setNewItem({ description: "", quantity: 1, rate: 0 });
   };
+
   const editItem = (index: number) => {
     const item = items[index];
     setNewItem({
@@ -73,13 +77,16 @@ function Sample() {
     });
     setEditIndex(index);
   };
+
   const deleteItem = (index: number) => {
     setItems(items.filter((_, i) => i !== index));
   };
+
   const subtotal = items.reduce((acc, item) => acc + item.amount, 0);
   const taxRate = 0.1; // 10% tax
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
+
   const printInvoice = () => {
     if (!client.name.trim() || !client.address.trim()) {
       alert("Please fill in client name and address before printing.");
@@ -89,72 +96,90 @@ function Sample() {
   };
 
   return (
-     <div className="min-h-screen bg-gray-100 flex justify-center p-6">
+    <div className="min-h-screen bg-gray-100 flex justify-center p-6">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
-        <h1 className="text-2xl font-bold mb-4 ">Invoice Builder</h1>
+        <h1 className="text-2xl font-bold mb-4">Invoice Builder</h1>
         <p className="text-gray-600 underline hover:text-red-500 text-green-500">
-           This Invoice Builder helps you create, edit, and export invoices.
-          </p>
-          <br></br>
-        <div className="space-y-4 mb-6">
+          This Invoice Builder helps you create, edit, and export invoices.
+        </p>
+        <br />
+
+        {/* Input Section */}
+        <div className="space-y-4 mb-6 no-print">
           <div className="flex items-center">
             <span className="w-40">Client Name :</span>
-            <input type="text" 
-            name="name" 
-            value={client.name}
-             onChange={handleClientChange} 
-             className="border p-2 flex-1" />
+            <input
+              type="text"
+              name="name"
+              value={client.name}
+              onChange={handleClientChange}
+              className="border p-2 flex-1"
+            />
           </div>
           <div className="flex items-center">
             <span className="w-40">Client Address :</span>
-            <input type="text"
-             name="address" 
-            value={client.address} 
-            onChange={handleClientChange}
+            <input
+              type="text"
+              name="address"
+              value={client.address}
+              onChange={handleClientChange}
               required
-              className="border p-2 flex-1" />
+              className="border p-2 flex-1"
+            />
           </div>
           <div className="flex items-center">
             <span className="w-40">Invoice Number :</span>
-            <input type="text" 
-            name="invoiceNumber"
-             value={client.invoiceNumber} 
-             onChange={handleClientChange} 
-             className="border p-2 flex-1" />
+            <input
+              type="text"
+              name="invoiceNumber"
+              value={client.invoiceNumber}
+              onChange={handleClientChange}
+              className="border p-2 flex-1"
+            />
           </div>
           <div className="flex items-center">
             <span className="w-40">Date :</span>
-            <input type="date" 
-            name="date" 
-            value={client.date} 
-            onChange={handleClientChange}
-             className="border p-2 flex-1" />
+            <input
+              type="date"
+              name="date"
+              value={client.date}
+              onChange={handleClientChange}
+              className="border p-2 flex-1"
+            />
           </div>
         </div>
-        <div className="space-y-4 mb-6">
+
+        {/* Item Section */}
+        <div className="space-y-4 mb-6 no-print">
           <div className="flex items-center">
             <span className="w-40">Description :</span>
-            <input type="text"
-            name="description"
-             value={newItem.description} 
-             onChange={handleItemChange}
-              className="border p-2 flex-1" />
+            <input
+              type="text"
+              name="description"
+              value={newItem.description}
+              onChange={handleItemChange}
+              className="border p-2 flex-1"
+            />
           </div>
           <div className="flex items-center">
             <span className="w-40">Quantity :</span>
-            <input type="number" 
-            name="quantity"
-            value={newItem.quantity} 
-            onChange={handleItemChange}
-            className="border p-2 flex-1" />
+            <input
+              type="number"
+              name="quantity"
+              value={newItem.quantity}
+              onChange={handleItemChange}
+              className="border p-2 flex-1"
+            />
           </div>
           <div className="flex items-center">
             <span className="w-40">Rate :</span>
-            <input type="number" 
-            name="rate"
-            value={newItem.rate} 
-             onChange={handleItemChange}
-             className="border p-2 flex-1" />
+            <input
+              type="number"
+              name="rate"
+              value={newItem.rate}
+              onChange={handleItemChange}
+              className="border p-2 flex-1"
+            />
           </div>
           <button
             onClick={addOrUpdateItem}
@@ -163,6 +188,8 @@ function Sample() {
             {editIndex !== null ? "Update" : "Add"}
           </button>
         </div>
+
+        {/* Invoice Section */}
         <div id="invoice" className="border p-4 rounded">
           <h2 className="text-xl font-semibold mb-4">Invoice</h2>
           <p><strong>Client:</strong> {client.name}</p>
@@ -177,7 +204,7 @@ function Sample() {
                 <th className="border p-2 text-right">Qty</th>
                 <th className="border p-2 text-right">Rate</th>
                 <th className="border p-2 text-right">Amount</th>
-                <th className="border p-2 text-center">Actions</th>
+                <th className="border p-2 text-center no-print">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -187,7 +214,7 @@ function Sample() {
                   <td className="border p-2 text-right">{item.quantity}</td>
                   <td className="border p-2 text-right">₹{item.rate.toFixed(2)}</td>
                   <td className="border p-2 text-right">₹{item.amount.toFixed(2)}</td>
-                  <td className="border p-2 text-center space-x-2">
+                  <td className="border p-2 text-center space-x-2 no-print">
                     <button
                       onClick={() => editItem(i)}
                       className="bg-yellow-500 text-white px-3 py-1 rounded"
@@ -215,9 +242,10 @@ function Sample() {
           </div>
         </div>
 
+        {/* Print Button */}
         <button
           onClick={printInvoice}
-          className="mt-6 bg-purple-600 text-white px-6 py-2 rounded"
+          className="mt-6 bg-purple-600 text-white px-6 py-2 rounded no-print"
         >
           Print Invoice
         </button>
@@ -226,4 +254,4 @@ function Sample() {
   );
 }
 
-export default Sample;
+export default Invoicebuilder;
